@@ -6,7 +6,7 @@ final ThemeData lightTheme = ThemeData(
       brightness: Brightness.dark,
       primary: Color(0xFFEB4A5A),
       onPrimary: Color(0xFFF7F8F8),
-      secondary: Color(0xFFEB4A5A),
+      secondary: Colors.black,
       onSecondary: Color(0xFFF7F8F8),
       background: Color(0xFFF7F8F8),
       onBackground: Colors.black,
@@ -22,11 +22,11 @@ final ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.bold,
         color: Colors.black),
     headlineMedium: TextStyle(
-        fontSize: 20.0,
+        fontSize: 22.0,
         fontWeight: FontWeight.bold,
         color: Colors.black),
-    bodyLarge: TextStyle(fontSize: 18.0, color: Color(0xFF3C3C3E)),
-    bodyMedium: TextStyle(fontSize: 16.0, color: Color(0xFF3C3C3E)),
+    bodyLarge: TextStyle(fontSize: 20.0, color: Color(0xFF3C3C3E)),
+    bodyMedium: TextStyle(fontSize: 18.0, color: Color(0xFF3C3C3E)),
     bodySmall: TextStyle(fontSize: 12.0, color: Color(0xFF3C3C3E)),
   ),
   scaffoldBackgroundColor: const Color(0xFFF7F8F8),
@@ -37,4 +37,5 @@ final ThemeData lightTheme = ThemeData(
   ),
   bottomSheetTheme: const BottomSheetThemeData(backgroundColor:Colors.transparent),
   progressIndicatorTheme: const ProgressIndicatorThemeData(color: Color(0xFFEB4A5A)),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Color(0xFFEB4A5A))
 );

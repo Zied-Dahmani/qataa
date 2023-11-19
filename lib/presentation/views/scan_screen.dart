@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:qataa/application/controllers/scan_controller.dart';
 import 'package:qataa/application/controllers/verification_state.dart';
+import 'package:qataa/application/services/onboarding_service.dart';
 import 'package:qataa/utils/constants/sizes.dart';
 import 'package:qataa/utils/screen_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-// TODO: Test(fontSize) & Logo & Play Store
-// TODO: Intro & Share
+// TODO: Test(small devices) & Play Store ( Logo & Name )
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key});
+  const ScanScreen({super.key,required this.focusNodes});
+  final focusNodes;
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -18,14 +20,19 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
   final ScanController _scanController = Get.find();
+  final OnBoardingService _onBoardingService = Get.find();
 
   @override
   void initState() {
     super.initState();
     ScreenUtil.CustomSystemChrome(context);
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       _scanController.listenVerificationState(context);
+      if(await _onBoardingService.isFirstTime())
+        {
+          Onboarding.of(context)!.show();
+        }
     });
   }
 
@@ -38,13 +45,16 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(FontAwesomeIcons.solidEnvelope),
-          onPressed: () {
-            _scanController.sendEmail();
-          },
+        leading: Focus(
+          focusNode: widget.focusNodes[1],
+          child: IconButton(
+            icon: const Icon(FontAwesomeIcons.solidEnvelope),
+            onPressed: () {
+              _scanController.sendEmail();
+            },
+          ),
         ),
       ),
       body: GetX<ScanController>(builder: (_) {
@@ -72,20 +82,24 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
           );
         }
       }),
-      floatingActionButton: FloatingActionButton(
-        child: Padding(
-          padding: const EdgeInsets.only(top: kSmallSpace),
-          child: Image.asset(
-            "assets/images/barcode.png",
-            width: kIconSize,
-            height: kIconSize,
+      floatingActionButton: Focus(
+        focusNode: widget.focusNodes[0],
+        child: FloatingActionButton(
+          child: Padding(
+            padding: const EdgeInsets.only(top: kSmallSpace),
+            child: Image.asset(
+              "assets/images/barcode.png",
+              width: kIconSize,
+              height: kIconSize,
+            ),
           ),
+          onPressed: () {
+            _scanController.scanBarcode(context);
+          },
         ),
-        onPressed: () {
-          _scanController.scanBarcode(context);
-        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+
   }
 }

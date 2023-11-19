@@ -5,7 +5,7 @@ import 'package:qataa/config/theme.dart';
 import 'package:get/get.dart';
 import 'package:qataa/application/app_bindings.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:qataa/utils/locale.dart' as locale_dart;
+import 'package:qataa/config/locale.dart' as locale_dart;
 
 void main() {
   runApp(const MyApp());

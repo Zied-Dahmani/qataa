@@ -14,6 +14,10 @@ class Locale implements Translations {
           'problemTitle': 'مشكلة',
           'productNotKnown': 'منتج معناش عليه معلومات',
           'connectivityProblem': 'ثبت في الإنترنت متاعك',
+          'scanOnBoardingTitle': 'سكاني المنتج',
+          'scanOnBoardingBody': 'بش تعرفو ضمن القائمة السوداء ولا تنجم تشريه',
+          'emailOnBoardingTitle': 'استفسارات',
+          'emailOnBoardingBody': 'كان تحب تسأل على حاجة تنجم تبعثلنا بريد إلكتروني',
         },
       };
 }
