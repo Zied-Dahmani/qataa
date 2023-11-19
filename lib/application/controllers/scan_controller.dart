@@ -63,9 +63,10 @@ class ScanController extends GetxController {
           context: context,
           builder: (BuildContext context) {
             return BottomSheetContent(
+                title : _connectivityService.isConnected.value ?'productNotKnownTitle'.tr: 'connectivityProblemTitle'.tr,
                 errorMessage: _connectivityService.isConnected.value
-                    ? 'productNotKnown'.tr
-                    : 'connectivityProblem'.tr);
+                    ? 'productNotKnownSubtitle'.tr
+                    : 'connectivityProblemSubtitle'.tr);
           },
         );
       } else if (value is VerificationLoadSuccess) {

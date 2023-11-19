@@ -8,11 +8,11 @@ import 'package:qataa/utils/screen_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-// TODO: Test(small devices) & Play Store ( Logo & Name )
+// TODO: Play Store ( Logo & Name )
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key,required this.focusNodes});
-  final focusNodes;
+  const ScanScreen({super.key, required this.focusNodes, this.builder});
+  final focusNodes, builder;
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -21,6 +21,7 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
   final ScanController _scanController = Get.find();
   final OnBoardingService _onBoardingService = Get.find();
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -29,10 +30,13 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _scanController.listenVerificationState(context);
-      if(await _onBoardingService.isFirstTime())
-        {
-          Onboarding.of(context)!.show();
-        }
+      widget.builder.call(context, setVisible);
+
+      if (await _onBoardingService.isFirstTime()) {
+        Onboarding.of(context)!.show();
+      } else {
+        isVisible = true;
+      }
     });
   }
 
@@ -43,18 +47,21 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
     }
   }
 
+  void setVisible() {
+    setState(() {
+      isVisible = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        leading: Focus(
-          focusNode: widget.focusNodes[1],
-          child: IconButton(
-            icon: const Icon(FontAwesomeIcons.solidEnvelope),
-            onPressed: () {
-              _scanController.sendEmail();
-            },
-          ),
+        leading: IconButton(
+          icon: const Icon(FontAwesomeIcons.solidEnvelope),
+          onPressed: () {
+            _scanController.sendEmail();
+          },
         ),
       ),
       body: GetX<ScanController>(builder: (_) {
@@ -64,19 +71,26 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: kBigSpace),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Image.asset(
                   "assets/images/basket.gif",
                   height: ScreenUtil.getScreenHeight(context) / 3,
                   width: ScreenUtil.getScreenWidth(context),
                 ),
-                Text('scanTitle'.tr, style: Get.textTheme.headlineMedium),
-                Text(
-                  'scanSubtitle'.tr,
-                  style: Get.textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
+                Visibility(
+                  visible: isVisible,
+                  child: Column(
+                    children: [
+                      Text('scanTitle'.tr, style: Get.textTheme.headlineLarge),
+                      Text(
+                        'scanSubtitle'.tr,
+                        style: Get.textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           );
@@ -100,6 +114,5 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-
   }
 }

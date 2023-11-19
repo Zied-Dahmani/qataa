@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:qataa/utils/constants/sizes.dart';
 
 class BottomSheetContent extends StatelessWidget {
-  const BottomSheetContent({super.key, this.isBlacklisted, this.errorMessage});
+  const BottomSheetContent({super.key, this.isBlacklisted,this.title, this.errorMessage});
 
-  final isBlacklisted, errorMessage;
+  final isBlacklisted, title, errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +34,18 @@ class BottomSheetContent extends StatelessWidget {
                   width: kBottomSheetIconSize),
               Text(
                   isBlacklisted == null
-                      ? 'problemTitle'.tr
+                      ? title
                       : isBlacklisted
                           ? 'blacklistedTitle'.tr
                           : 'notBlacklistedTitle'.tr,
-                  style: Get.textTheme.headlineMedium),
+                  style: Get.textTheme.headlineLarge),
               Text(
                 isBlacklisted == null
                     ? errorMessage
                     : isBlacklisted
                         ? 'blacklistSubtitle'.tr
                         : 'notBlacklistSubtitle'.tr,
-                style: Get.textTheme.bodyMedium,
+                style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
             ],

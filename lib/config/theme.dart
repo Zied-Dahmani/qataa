@@ -22,11 +22,11 @@ final ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.bold,
         color: Colors.black),
     headlineMedium: TextStyle(
-        fontSize: 22.0,
+        fontSize: 24.0,
         fontWeight: FontWeight.bold,
         color: Colors.black),
     bodyLarge: TextStyle(fontSize: 20.0, color: Color(0xFF3C3C3E)),
-    bodyMedium: TextStyle(fontSize: 18.0, color: Color(0xFF3C3C3E)),
+    bodyMedium: TextStyle(fontSize: 16.0, color: Color(0xFF3C3C3E)),
     bodySmall: TextStyle(fontSize: 12.0, color: Color(0xFF3C3C3E)),
   ),
   scaffoldBackgroundColor: const Color(0xFFF7F8F8),
