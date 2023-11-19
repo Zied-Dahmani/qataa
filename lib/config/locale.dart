@@ -19,6 +19,9 @@ class Locale implements Translations {
           'scanOnBoardingBody': 'بش تعرفو ضمن القائمة السوداء ولا تنجم تشريه',
           'emailOnBoardingTitle': 'استفسارات',
           'emailOnBoardingBody': 'كان تحب تسأل على حاجة تنجم تبعثلنا بريد إلكتروني',
+          'alertTitle': 'تنبيه',
+          'alertSubtitle': 'كل مرة قعدين نزيدو في منتج إلى قائمة المقاطعة.',
+          'ok': 'مفهوم',
         },
       };
 }

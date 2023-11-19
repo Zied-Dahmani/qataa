@@ -3,6 +3,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:qataa/application/controllers/scan_controller.dart';
 import 'package:qataa/application/controllers/verification_state.dart';
 import 'package:qataa/application/services/onboarding_service.dart';
+import 'package:qataa/presentation/widgets/alert_dialog.dart';
 import 'package:qataa/utils/constants/sizes.dart';
 import 'package:qataa/utils/screen_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,6 +23,7 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
   final ScanController _scanController = Get.find();
   final OnBoardingService _onBoardingService = Get.find();
   bool isVisible = false;
+  bool isFirstTime = false;
 
   @override
   void initState() {
@@ -32,11 +34,13 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
       _scanController.listenVerificationState(context);
       widget.builder.call(context, setVisible);
 
-      if (await _onBoardingService.isFirstTime()) {
+      isFirstTime = await _onBoardingService.isFirstTime();
+      if (isFirstTime) {
         Onboarding.of(context)!.show();
       } else {
-        isVisible = true;
+        setVisible();
       }
+
     });
   }
 
@@ -47,72 +51,78 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
     }
   }
 
-  void setVisible() {
+  void setVisible(){
     setState(() {
       isVisible = true;
     });
+    if (isFirstTime) {
+      showAlertDialog(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(FontAwesomeIcons.solidEnvelope),
-          onPressed: () {
-            _scanController.sendEmail();
-          },
-        ),
-      ),
-      body: GetX<ScanController>(builder: (_) {
-        if (_scanController.state is VerificationLoadInProgress) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kBigSpace),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(
-                  "assets/images/basket.gif",
-                  height: ScreenUtil.getScreenHeight(context) / 3,
-                  width: ScreenUtil.getScreenWidth(context),
-                ),
-                Visibility(
-                  visible: isVisible,
-                  child: Column(
-                    children: [
-                      Text('scanTitle'.tr, style: Get.textTheme.headlineLarge),
-                      Text(
-                        'scanSubtitle'.tr,
-                        style: Get.textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-      }),
-      floatingActionButton: Focus(
-        focusNode: widget.focusNodes[0],
-        child: FloatingActionButton(
-          child: Padding(
-            padding: const EdgeInsets.only(top: kSmallSpace),
-            child: Image.asset(
-              "assets/images/barcode.png",
-              width: kIconSize,
-              height: kIconSize,
-            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(FontAwesomeIcons.solidEnvelope),
+            onPressed: () {
+              _scanController.sendEmail();
+            },
           ),
-          onPressed: () {
-            _scanController.scanBarcode(context);
-          },
         ),
+        body: GetX<ScanController>(builder: (_) {
+          if (_scanController.state is VerificationLoadInProgress) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kBigSpace),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    "assets/images/basket.gif",
+                    height: ScreenUtil.getScreenHeight(context) / 3,
+                    width: ScreenUtil.getScreenWidth(context),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: Column(
+                      children: [
+                        Text('scanTitle'.tr, style: Get.textTheme.headlineLarge),
+                        Text(
+                          'scanSubtitle'.tr,
+                          style: Get.textTheme.bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        }),
+        floatingActionButton: Focus(
+          focusNode: widget.focusNodes[0],
+          child: FloatingActionButton(
+            child: Padding(
+              padding: const EdgeInsets.only(top: kSmallSpace),
+              child: Image.asset(
+                "assets/images/barcode.png",
+                width: kIconSize,
+                height: kIconSize,
+              ),
+            ),
+            onPressed: () {
+              _scanController.scanBarcode(context);
+            },
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
