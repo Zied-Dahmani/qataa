@@ -22,13 +22,11 @@ class ScanController extends GetxController {
   RxInterface<VerificationState> get rxIState => _verificationState;
   VerificationState get state => _verificationState.value;
   bool get isBlacklisted {
-    VerificationLoadSuccess verificationLoadSuccess =
-        _verificationState.value as VerificationLoadSuccess;
+    VerificationLoadSuccess verificationLoadSuccess = _verificationState.value as VerificationLoadSuccess;
     return verificationLoadSuccess.isBlacklisted;
   }
 
-  static final _possibleFormats = BarcodeFormat.values.toList()
-    ..removeWhere((e) => e == BarcodeFormat.unknown);
+  static final _possibleFormats = BarcodeFormat.values.toList()..removeWhere((e) => e == BarcodeFormat.unknown);
   List<BarcodeFormat> selectedFormats = [..._possibleFormats];
 
   Future<void> scanBarcode(BuildContext context) async {
@@ -45,13 +43,10 @@ class ScanController extends GetxController {
         ),
       );
       ScreenUtil.CustomSystemChrome(context);
-      print(result);
       if (result.rawContent.isNotEmpty) {
         _verificationState.value = VerificationLoadInProgress();
-        final isBlacklisted =
-            await _scanBarcodeUseCase.execute(result.rawContent);
-        _verificationState.value =
-            VerificationLoadSuccess(isBlacklisted: isBlacklisted);
+        final isBlacklisted = await _scanBarcodeUseCase.execute(result.rawContent);
+        _verificationState.value = VerificationLoadSuccess(isBlacklisted: isBlacklisted);
       }
     } catch (e) {
       developer.log(e.toString(), name: 'Catch scanBarcode');
