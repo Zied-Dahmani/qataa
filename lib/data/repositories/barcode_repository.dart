@@ -17,7 +17,8 @@ class BarcodeRepository implements IBarcodeRepository {
         final attributeValue = result.data['product'][attribute];
         if (attributeValue != null) {
           final lowerCasedValue = attributeValue.toLowerCase();
-          return boycottList.data.any((word) => lowerCasedValue.contains(word));
+          // I had to add ? true : false because it sometimes returns another type of result (not bool)
+          return boycottList.data.any((keyword) => lowerCasedValue.contains(keyword) ? true : false);
         }
         return false;
       });

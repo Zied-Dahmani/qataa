@@ -43,7 +43,7 @@ class BottomSheetContent extends StatelessWidget {
                 isBoycotted == null
                     ? errorMessage
                     : isBoycotted
-                        ? 'boycottSubtitle'.tr
+                        ? 'boycottedSubtitle'.tr
                         : 'supportedSubtitle'.tr,
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
