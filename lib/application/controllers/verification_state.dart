@@ -8,12 +8,12 @@ class VerificationState extends Equatable {
 class VerificationLoadInProgress extends VerificationState {}
 
 class VerificationLoadSuccess extends VerificationState {
-  final bool isBlacklisted;
+  final bool isBoycotted;
 
-  VerificationLoadSuccess({required this.isBlacklisted});
+  VerificationLoadSuccess({required this.isBoycotted});
 
   @override
-  List<Object> get props => [isBlacklisted];
+  List<Object> get props => [isBoycotted];
 }
 
 class VerificationLoadFailure extends VerificationState {

@@ -9,8 +9,6 @@ import 'package:qataa/utils/screen_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-// TODO: Play Store ( Logo & Name )
-
 class ScanScreen extends StatefulWidget {
   const ScanScreen({super.key, required this.focusNodes, this.builder});
   final focusNodes, builder;

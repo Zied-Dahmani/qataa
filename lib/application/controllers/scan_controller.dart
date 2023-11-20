@@ -21,9 +21,9 @@ class ScanController extends GetxController {
   final _verificationState = VerificationState().obs;
   RxInterface<VerificationState> get rxIState => _verificationState;
   VerificationState get state => _verificationState.value;
-  bool get isBlacklisted {
+  bool get isBoycotted {
     VerificationLoadSuccess verificationLoadSuccess = _verificationState.value as VerificationLoadSuccess;
-    return verificationLoadSuccess.isBlacklisted;
+    return verificationLoadSuccess.isBoycotted;
   }
 
   static final _possibleFormats = BarcodeFormat.values.toList()..removeWhere((e) => e == BarcodeFormat.unknown);
@@ -45,8 +45,8 @@ class ScanController extends GetxController {
       ScreenUtil.CustomSystemChrome(context);
       if (result.rawContent.isNotEmpty) {
         _verificationState.value = VerificationLoadInProgress();
-        final isBlacklisted = await _scanBarcodeUseCase.execute(result.rawContent);
-        _verificationState.value = VerificationLoadSuccess(isBlacklisted: isBlacklisted);
+        final isBoycotted = await _scanBarcodeUseCase.execute(result.rawContent);
+        _verificationState.value = VerificationLoadSuccess(isBoycotted: isBoycotted);
       }
     } catch (e) {
       developer.log(e.toString(), name: 'Catch scanBarcode');
@@ -73,7 +73,7 @@ class ScanController extends GetxController {
         final player1 = AudioPlayer();
         final player2 = AudioPlayer();
 
-        if (isBlacklisted) {
+        if (isBoycotted) {
           player2.play(AssetSource('sounds/baby-crying.mp3'));
           player1.setVolume(0.3);
           player1.play(AssetSource('sounds/explosion.mp3'));
@@ -86,10 +86,10 @@ class ScanController extends GetxController {
         showModalBottomSheet(
           context: context,
           builder: (BuildContext context) {
-            return BottomSheetContent(isBlacklisted: isBlacklisted);
+            return BottomSheetContent(isBoycotted: isBoycotted);
           },
         ).whenComplete(() {
-          if (isBlacklisted) {
+          if (isBoycotted) {
             player1.stop();
             player2.stop();
           }

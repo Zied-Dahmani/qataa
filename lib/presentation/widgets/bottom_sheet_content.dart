@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:qataa/utils/constants/sizes.dart';
 
 class BottomSheetContent extends StatelessWidget {
-  const BottomSheetContent({super.key, this.isBlacklisted,this.title, this.errorMessage});
+  const BottomSheetContent({super.key, this.isBoycotted,this.title, this.errorMessage});
 
-  final isBlacklisted, title, errorMessage;
+  final isBoycotted, title, errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +25,26 @@ class BottomSheetContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                  isBlacklisted == null
+                  isBoycotted == null
                       ? 'assets/images/error.gif'
-                      : isBlacklisted
-                          ? 'assets/images/blacklisted.gif'
-                          : 'assets/images/not_blacklisted.gif',
+                      : isBoycotted
+                          ? 'assets/images/boycotted.gif'
+                          : 'assets/images/supported.gif',
                   height: kBottomSheetIconSize,
                   width: kBottomSheetIconSize),
               Text(
-                  isBlacklisted == null
+                  isBoycotted == null
                       ? title
-                      : isBlacklisted
-                          ? 'blacklistedTitle'.tr
-                          : 'notBlacklistedTitle'.tr,
+                      : isBoycotted
+                          ? 'boycottedTitle'.tr
+                          : 'supportedTitle'.tr,
                   style: Get.textTheme.headlineLarge),
               Text(
-                isBlacklisted == null
+                isBoycotted == null
                     ? errorMessage
-                    : isBlacklisted
-                        ? 'blacklistSubtitle'.tr
-                        : 'notBlacklistSubtitle'.tr,
+                    : isBoycotted
+                        ? 'boycottSubtitle'.tr
+                        : 'supportedSubtitle'.tr,
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
