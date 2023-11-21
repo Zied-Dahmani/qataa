@@ -74,7 +74,7 @@ class ScanController extends GetxController {
         final player2 = AudioPlayer();
 
         if (isBoycotted) {
-          player2.play(AssetSource('sounds/baby-crying.mp3'));
+          player2.play(AssetSource('sounds/baby_crying.mp3'));
           player1.setVolume(0.3);
           player1.play(AssetSource('sounds/explosion.mp3'));
           player1.onPlayerComplete.listen((event) {

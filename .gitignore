@@ -140,3 +140,5 @@ app.*.symbols
 # Play Store
 key.properties
 app/upload-keystore.jks
+
+*.env

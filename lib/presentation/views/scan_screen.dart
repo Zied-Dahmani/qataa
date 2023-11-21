@@ -76,7 +76,7 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
             return const Center(child: CircularProgressIndicator());
           } else {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kBigSpace),
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.kBigSpace),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -107,11 +107,11 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
           focusNode: widget.focusNodes[0],
           child: FloatingActionButton(
             child: Padding(
-              padding: const EdgeInsets.only(top: kSmallSpace),
+              padding: const EdgeInsets.only(top: Sizes.kSmallSpace),
               child: Image.asset(
                 "assets/images/barcode.png",
-                width: kIconSize,
-                height: kIconSize,
+                width: Sizes.kIconSize,
+                height: Sizes.kIconSize,
               ),
             ),
             onPressed: () {

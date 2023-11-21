@@ -11,12 +11,12 @@ class BottomSheetContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Container(
-        padding: const EdgeInsets.all(kBigSpace),
+        padding: const EdgeInsets.all(Sizes.kBigSpace),
         decoration: BoxDecoration(
           color: Get.theme.colorScheme.background,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(kRadius),
-            topRight: Radius.circular(kRadius),
+            topLeft: Radius.circular(Sizes.kRadius),
+            topRight: Radius.circular(Sizes.kRadius),
           ),
         ),
         //height: kBottomSheetHeight,
@@ -30,8 +30,8 @@ class BottomSheetContent extends StatelessWidget {
                       : isBoycotted
                           ? 'assets/images/boycotted.gif'
                           : 'assets/images/supported.gif',
-                  height: kBottomSheetIconSize,
-                  width: kBottomSheetIconSize),
+                  height: Sizes.kBottomSheetIconSize,
+                  width: Sizes.kBottomSheetIconSize),
               Text(
                   isBoycotted == null
                       ? title

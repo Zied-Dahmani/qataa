@@ -11,14 +11,14 @@ void showAlertDialog(BuildContext context) {
         title: Text('alertTitle'.tr, style: Get.textTheme.headlineLarge),
         content: Text('alertSubtitle'.tr, style: Get.textTheme.bodyLarge),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(kRadius),
+          borderRadius: BorderRadius.circular(Sizes.kRadius),
         ),
         actions: [
           ElevatedButton(
             style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kRadius),
+                  borderRadius: BorderRadius.circular(Sizes.kRadius),
                 ),
               ),
             ),

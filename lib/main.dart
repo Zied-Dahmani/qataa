@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:qataa/config/router/app_router.dart';
 import 'package:qataa/config/theme.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,8 @@ import 'package:qataa/application/app_bindings.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qataa/config/locale.dart' as locale_dart;
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 

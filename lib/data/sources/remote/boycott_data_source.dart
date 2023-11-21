@@ -8,7 +8,7 @@ class BoycottDataSource {
 
   Future<Response> fetchBoycottList() async {
     return await dio.get(
-      kBoycottListEndpoint,
+      APIConstants.kBoycottListEndpoint,
       options: Options(
         validateStatus: (status) {
           return status == 200;
