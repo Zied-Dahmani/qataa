@@ -141,4 +141,4 @@ app.*.symbols
 key.properties
 app/upload-keystore.jks
 
-*.env
+.env
