@@ -13,7 +13,7 @@ class BarcodeRepository implements IBarcodeRepository {
       final boycottList = await _boycottDataSource.fetchBoycottList();
       final result = await _barcodeDataProvider.fetchBarcodeData(barcode);
 
-      return ['brand', 'desciption','manufacturer','title'].any((attribute) {
+      return ['brand', 'description','manufacturer','title'].any((attribute) {
         final attributeValue = result.data['product'][attribute];
         if (attributeValue != null) {
           final lowerCasedValue = attributeValue.toLowerCase();

@@ -10,6 +10,7 @@ import 'package:qataa/application/services/connectivity_service.dart';
 import 'package:qataa/application/usecases/scan_barcode_use_case.dart';
 import 'package:qataa/presentation/widgets/bottom_sheet_content.dart';
 import 'package:qataa/utils/screen_util.dart';
+import 'package:share_plus/share_plus.dart';
 import 'dart:developer' as developer;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -109,5 +110,9 @@ class ScanController extends GetxController {
     } else {
       throw 'Could not launch $uri';
     }
+  }
+
+  Future<void> shareApp() async {
+    await Share.shareUri(Uri.parse('https://play.google.com/store/apps/details?id=com.rebounddev.qataa'));
   }
 }

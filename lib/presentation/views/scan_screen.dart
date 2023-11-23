@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:qataa/application/controllers/scan_controller.dart';
@@ -42,13 +43,6 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
     });
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      ScreenUtil.CustomSystemChrome(context);
-    }
-  }
-
   void setVisible(){
     setState(() {
       isVisible = true;
@@ -59,17 +53,35 @@ class _ScanScreenState extends State<ScanScreen> with WidgetsBindingObserver {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      ScreenUtil.CustomSystemChrome(context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(FontAwesomeIcons.solidEnvelope),
-            onPressed: () {
-              _scanController.sendEmail();
-            },
-          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: const Icon(FontAwesomeIcons.solidEnvelope),
+                onPressed: () {
+                  _scanController.sendEmail();
+                },
+              ),
+              IconButton(
+                icon: const Icon(FontAwesomeIcons.share),
+                onPressed: () {
+                  _scanController.shareApp();
+                },
+              ),
+            ],
+          )
         ),
         body: GetX<ScanController>(builder: (_) {
           if (_scanController.state is VerificationLoadInProgress) {
